@@ -3,37 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROD | تسجيل الدخول</title>
+    <title>ROD | منصة المشاهدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --main-color: #ff9800; --bg-color: #0b0b0b; }
-        body { background: var(--bg-color); color: white; font-family: 'Cairo', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        body { background: var(--bg-color); color: white; font-family: 'Cairo', sans-serif; margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
         
         /* شاشة تسجيل الدخول */
-        #auth-screen { text-align: center; width: 100%; padding: 20px; }
-        #auth-screen h1 { color: var(--main-color); font-size: 3.5rem; margin-bottom: 20px; letter-spacing: 5px; }
+        #auth-screen { text-align: center; width: 100%; padding: 20px; z-index: 1000; }
+        #auth-screen h1 { color: var(--main-color); font-size: 3.5rem; margin-bottom: 20px; letter-spacing: 5px; text-shadow: 0 0 15px rgba(255,152,0,0.3); }
         .login-box { background: #1a1a1a; padding: 40px 30px; border-radius: 20px; border: 1px solid #333; max-width: 400px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #222; color: white; text-align: center; font-size: 1.1rem; box-sizing: border-box; }
         input:focus { border-color: var(--main-color); outline: none; }
-        .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
+        .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .login-btn:hover { background: #e68a00; transform: scale(1.02); }
         #error-msg { color: #f44336; margin-top: 15px; display: none; font-weight: bold; }
 
         /* محتوى الموقع الرئيسي */
         #main-content { display: none; width: 100%; align-self: flex-start; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; border-bottom: 2px solid var(--main-color); background: #000; position: sticky; top: 0; z-index: 100; }
-        header h1 { color: var(--main-color); margin: 0; font-size: 1.8rem; }
-        .logout-btn { background: #333; color: white; border: 1px solid #444; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
-        .logout-btn:hover { background: #f44336; border-color: #f44336; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid var(--main-color); background: #000; position: sticky; top: 0; z-index: 100; }
+        header h1 { color: var(--main-color); margin: 0; font-size: 1.8rem; letter-spacing: 2px; }
+        .logout-btn { background: #333; color: #ccc; border: 1px solid #444; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: 'Cairo'; }
+        .logout-btn:hover { background: #f44336; color: white; border-color: #f44336; }
 
         .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: auto; }
         .card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s; }
+        .card:hover { transform: translateY(-8px); border-color: var(--main-color); }
         .card img { width: 100%; height: 240px; object-fit: cover; }
-        .rating { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.85); color: var(--main-color); padding: 2px 7px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; }
+        .card-info { padding: 10px; text-align: center; }
+        .card-info h3 { font-size: 0.95rem; margin: 0; color: #efefef; }
+        .rating { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.85); color: var(--main-color); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
         
         /* مشغل الفيديو */
         #player { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; overflow-y: auto; }
-        video { width: 100%; max-width: 900px; margin: 80px auto 20px; border: 2px solid var(--main-color); border-radius: 10px; }
-        .close-btn { position: absolute; top: 20px; left: 20px; background: var(--main-color); color: black; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .player-header { padding: 15px; display: flex; align-items: center; position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.8); z-index: 10001; }
+        .close-btn { background: var(--main-color); color: black; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-left: 20px; }
+        video { width: 100%; max-width: 900px; margin: 80px auto 20px; border: 1px solid #333; border-radius: 10px; display: block; }
+        
+        .interaction-area { width: 90%; max-width: 900px; margin: 0 auto 50px auto; }
     </style>
 </head>
 <body>
@@ -57,35 +64,60 @@
 </div>
 
 <div id="player">
-    <div class="close-btn" onclick="closePlayer()">إغلاق ✕</div>
+    <div class="player-header">
+        <div class="close-btn" onclick="closePlayer()">إغلاق ✕</div>
+        <span id="player-title" style="font-weight: bold; font-size: 1.1rem; color: var(--main-color);"></span>
+    </div>
     <video id="main-video" controls playsinline></video>
-    <div id="giscus-container" style="width: 90%; max-width: 900px; margin: 20px auto;"></div>
+    <div class="interaction-area" id="giscus-container"></div>
 </div>
 
 <script>
-    const GITHUB_USER = "ha8680878-lab";
-    const REPO = "cinema-local";
+    const GITHUB_REPO = "ha8680878-lab/cinema-local";
+
+    // التحقق من حالة الدخول عند فتح الموقع
+    window.onload = function() {
+        const session = localStorage.getItem('ROD_Session');
+        if (session === 'active') {
+            showMainContent();
+        }
+    };
 
     async function login() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
         const err = document.getElementById('error-msg');
 
+        if(!u || !p) return;
+
         try {
-            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${REPO}/main/keys.json`);
+            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/keys.json`);
             const users = await res.json();
             const found = users.find(user => user.user === u && user.pass === p);
 
             if (found) {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                document.body.style.display = 'block'; 
-                loadMovies();
+                // حفظ حالة الدخول في ذاكرة الهاتف
+                localStorage.setItem('ROD_Session', 'active');
+                showMainContent();
             } else {
                 err.style.display = 'block';
             }
         } catch (e) {
-            alert("فشل في الوصول لقاعدة البيانات!");
+            alert("فشل في التحقق من البيانات. تأكد من اتصال الإنترنت.");
+        }
+    }
+
+    function showMainContent() {
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        document.body.style.display = 'block';
+        loadMovies();
+    }
+
+    function logout() {
+        if(confirm("هل تريد تسجيل الخروج؟ ستحتاج لإدخال الكود مرة أخرى.")) {
+            localStorage.removeItem('ROD_Session');
+            location.reload();
         }
     }
 
@@ -97,8 +129,13 @@
         data.forEach(m => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `<div class="rating">⭐ ${m.rating}</div><img src="${m.poster}"><div style="padding:10px;text-align:center;">${m.title}</div>`;
+            card.innerHTML = `
+                <div class="rating">⭐ ${m.rating}</div>
+                <img src="${m.poster}">
+                <div class="card-info"><h3>${m.title}</h3></div>
+            `;
             card.onclick = () => {
+                document.getElementById('player-title').innerText = m.title;
                 document.getElementById('main-video').src = m.url;
                 document.getElementById('player').style.display = 'flex';
                 document.getElementById('main-video').play();
@@ -108,17 +145,12 @@
         });
     }
 
-    function logout() {
-        // إعادة تحميل الصفحة تمسح كل بيانات الجلسة المؤقتة وتعود لشاشة القفل
-        location.reload();
-    }
-
     function loadComments() {
         const container = document.getElementById('giscus-container');
         container.innerHTML = "";
         const s = document.createElement('script');
         s.src = "https://giscus.app/client.js";
-        s.setAttribute("data-repo", `${GITHUB_USER}/${REPO}`);
+        s.setAttribute("data-repo", GITHUB_REPO);
         s.setAttribute("data-repo-id", "R_kgDON7u00A");
         s.setAttribute("data-category", "General");
         s.setAttribute("data-category-id", "DIC_kwDON7u00M4CnH0X");
@@ -132,8 +164,9 @@
 
     function closePlayer() {
         document.getElementById('player').style.display = 'none';
-        document.getElementById('main-video').pause();
-        document.getElementById('main-video').src = "";
+        const v = document.getElementById('main-video');
+        v.pause();
+        v.src = "";
     }
 </script>
 
