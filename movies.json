@@ -1,18 +1,10 @@
 [
     {
-        "title": "فارس الظلام",
-        "poster": "https://image.tmdb.org/t/p/w500/6Z9znq1IxwknrdPbXyr7NJJPhpP.jpg",
-        "year": "2008",
-        "rating": 8.5,
-        "overview": "يبدأ باتمان فى محاربة العدو الجديد (الجوكر) الذي يسعى لنشر الذعر والشر في جوثام، وإثبات أن العيش بدون قواعد أفضل، مما يؤدي لصراع بين الاثنين يشترك فيه المفتش جوردن والمدعى العام هارفي دينت وراشيل صديقة بروس وين.",
-        "url": "https://example.com/movie.mp4"
-    },
-    {
-        "title": "The Tank",
-        "poster": "https://image.tmdb.org/t/p/w500/2VxEtwgzOUukatl2IKGn4borpgE.jpg",
-        "year": "2023",
-        "rating": 5.1,
-        "overview": "بعد أن ورث \"بِن\" وعائلته ملكية مهجورة على الساحل، يُطلق العنان بطريق الخطأ إلى مخلوق قديم تسبب في إرهاب المنطقة بأكملها وتدمير الأجيال في الماضي.",
+        "title": "The TANK",
+        "poster": "https://cinema.albox.co/storage/movies/the-tank-2024.jpg",
+        "year": "2026",
+        "rating": 6.9,
+        "overview": "يرسل طاقم دبابة تايغر ألمانية مكونة من خمسة أفراد في مهمة سرية بعيداً خلف الخط الأمامي الذي كان ينافس بشدة، مدفوعين بميثامفيتامين فيرماخت.",
         "url": "https://cloud02.albox.co/episodes/e83effc2-3df5-481a-b7f4-540f3acfe475.mp4"
     }
 ]
