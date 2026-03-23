@@ -18,9 +18,13 @@
         .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
         #error-msg { color: #f44336; margin-top: 15px; display: none; font-weight: bold; }
 
-        /* محتوى الموقع (مخفي) */
+        /* محتوى الموقع الرئيسي */
         #main-content { display: none; width: 100%; align-self: flex-start; }
-        header { text-align: center; padding: 20px; border-bottom: 2px solid var(--main-color); background: #000; position: sticky; top: 0; z-index: 100; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; border-bottom: 2px solid var(--main-color); background: #000; position: sticky; top: 0; z-index: 100; }
+        header h1 { color: var(--main-color); margin: 0; font-size: 1.8rem; }
+        .logout-btn { background: #333; color: white; border: 1px solid #444; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
+        .logout-btn:hover { background: #f44336; border-color: #f44336; }
+
         .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: auto; }
         .card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s; }
         .card img { width: 100%; height: 240px; object-fit: cover; }
@@ -37,15 +41,18 @@
 <div id="auth-screen">
     <h1>ROD</h1>
     <div class="login-box">
-        <input type="text" id="username" placeholder="اسم المستخدم">
-        <input type="password" id="password" placeholder="كلمة المرور">
+        <input type="text" id="username" placeholder="اسم المستخدم" autocomplete="off">
+        <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password">
         <button class="login-btn" onclick="login()">دخول المنصة</button>
         <p id="error-msg">بيانات الدخول غير صحيحة!</p>
     </div>
 </div>
 
 <div id="main-content">
-    <header><h1>ROD</h1></header>
+    <header>
+        <h1>ROD</h1>
+        <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+    </header>
     <div class="container" id="movie-list"></div>
 </div>
 
@@ -65,11 +72,8 @@
         const err = document.getElementById('error-msg');
 
         try {
-            // جلب ملف اليوزرات من جيثب
             const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${REPO}/main/keys.json`);
             const users = await res.json();
-            
-            // التحقق من المطابقة
             const found = users.find(user => user.user === u && user.pass === p);
 
             if (found) {
@@ -81,7 +85,7 @@
                 err.style.display = 'block';
             }
         } catch (e) {
-            alert("حدث خطأ أثناء الاتصال بقاعدة البيانات!");
+            alert("فشل في الوصول لقاعدة البيانات!");
         }
     }
 
@@ -102,6 +106,11 @@
             };
             list.appendChild(card);
         });
+    }
+
+    function logout() {
+        // إعادة تحميل الصفحة تمسح كل بيانات الجلسة المؤقتة وتعود لشاشة القفل
+        location.reload();
     }
 
     function loadComments() {
