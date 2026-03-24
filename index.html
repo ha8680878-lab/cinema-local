@@ -10,109 +10,133 @@
             --main: #ff9800; 
             --bg: #050505; 
             --card-w: 160px; 
-            --glass: rgba(15, 15, 15, 0.9);
-            --smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass: rgba(15, 15, 15, 0.85);
+            --smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body { 
-            background: var(--bg); 
-            color: #fff; 
-            font-family: 'Cairo', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
+            background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; 
+            margin: 0; overflow-x: hidden; user-select: none;
         }
 
-        /* --- الشعار --- */
+        /* --- تأثيرات الشعار المتحرك --- */
         .logo { font-size: 1.8rem; font-weight: 900; color: var(--main); text-decoration: none; display: flex; align-items: center; gap: 5px; }
-        .logo-text { animation: logoPulse 2s infinite ease-in-out; }
-        @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); text-shadow: 0 0 20px var(--main); } }
+        .logo-text { animation: logoPulse 2s infinite ease-in-out; text-shadow: 0 0 10px rgba(255,152,0,0.5); }
+        .logo-icon { font-family: Arial, sans-serif; animation: iconSlide 1.5s infinite alternate ease-in-out; }
+
+        @keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); text-shadow: 0 0 25px var(--main); } }
+        @keyframes iconSlide { 0% { transform: translateX(0px); } 100% { transform: translateX(5px); } }
 
         header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 5%; background: var(--glass); backdrop-filter: blur(15px); 
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111;
+            padding: 12px 5%; background: var(--glass); backdrop-filter: blur(15px); 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* --- قسم البحث --- */
-        .search-container { padding: 10px 5%; background: var(--bg); }
-        .search-box {
-            width: 100%; padding: 12px 20px; border-radius: 12px; border: 1px solid #222;
-            background: #111; color: #fff; font-family: 'Cairo'; font-size: 0.9rem;
-            transition: var(--smooth);
+        /* --- شريط البحث --- */
+        .search-area { padding: 15px 5%; background: var(--bg); }
+        .search-input {
+            width: 100%; padding: 12px 20px; border-radius: 50px; border: 1px solid #222;
+            background: #111; color: #fff; font-family: 'Cairo'; transition: var(--smooth);
         }
-        .search-box:focus { border-color: var(--main); box-shadow: 0 0 15px rgba(255,152,0,0.2); }
+        .search-input:focus { border-color: var(--main); box-shadow: 0 0 15px rgba(255,152,0,0.2); }
 
-        /* --- الأزرار --- */
-        .btn-nav { 
-            background: var(--main); color: #000; padding: 8px 18px; 
-            border-radius: 10px; font-weight: 800; border: none; cursor: pointer;
-            font-family: 'Cairo'; font-size: 0.85rem; transition: var(--smooth);
+        .btn-main { 
+            background: linear-gradient(45deg, var(--main), #ffb74d); color: #000; 
+            padding: 8px 20px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer;
         }
-        .btn-nav:hover { opacity: 0.9; transform: scale(1.05); }
-        .btn-secondary { background: #222; color: #fff; margin-left: 8px; }
 
-        /* --- الشبكة والصفوف --- */
-        .row { margin-bottom: 30px; padding-right: 5%; }
-        .row-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: #eee; border-right: 4px solid var(--main); padding-right: 10px; }
-        .row-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; scrollbar-width: none; }
+        .row { margin-bottom: 35px; padding-right: 5%; animation: fadeIn 1s ease; }
+        .row-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .row-title::before { content: ''; width: 4px; height: 20px; background: var(--main); border-radius: 10px; }
+        
+        .row-container { display: flex; overflow-x: auto; gap: 18px; padding-bottom: 20px; scrollbar-width: none; }
         .row-container::-webkit-scrollbar { display: none; }
 
-        .card { flex: 0 0 var(--card-w); border-radius: 12px; overflow: hidden; position: relative; background: #111; cursor: pointer; transition: var(--smooth); }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .card { flex: 0 0 var(--card-w); border-radius: 14px; overflow: hidden; position: relative; background: #111; border: 1px solid rgba(255,255,255,0.05); transition: var(--smooth); cursor: pointer; }
+        .card:hover { transform: translateY(-8px); border-color: var(--main); }
         .card img { width: 100%; height: 230px; object-fit: cover; }
-        .card-title { position: absolute; bottom: 0; width: 100%; padding: 15px 10px; background: linear-gradient(transparent, #000); font-size: 0.8rem; text-align: center; }
+        .card-title { position: absolute; bottom: 0; width: 100%; padding: 25px 10px 10px; background: linear-gradient(transparent, #000); font-size: 0.85rem; text-align: center; }
 
         /* --- المشغل --- */
-        #player { display: none; position: fixed; inset: 0; background: #000; z-index: 2000; flex-direction: column; overflow-y: auto; }
-        .p-header { padding: 15px 5%; display: flex; align-items: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; }
-        video { width: 100%; max-height: 60vh; background: #000; }
+        #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
+        .p-header { padding: 15px 5%; display: flex; align-items: center; background: var(--glass); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 5; }
+        video { width: 100%; max-height: 70vh; background: #000; }
 
-        .movie-details { padding: 20px 5%; }
-        .movie-details h1 { color: var(--main); font-size: 1.6rem; margin: 0; font-weight: 900; }
+        .movie-info-section { padding: 25px 5% 10px; text-align: right; }
+        .movie-info-section h1 { color: var(--main); font-size: 1.8rem; margin: 0; font-weight: 900; }
 
-        #auth-screen { position: fixed; inset: 0; background: #050505; display: flex; align-items: center; justify-content: center; z-index: 10000; }
-        .login-box { width: 90%; max-width: 350px; text-align: center; }
-        .login-box input { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #222; background: #111; color: #fff; text-align: center; font-family: 'Cairo'; }
+        .p-actions { display: flex; justify-content: space-around; padding: 20px 5%; background: #0a0a0a; border-bottom: 1px solid #1a1a1a; }
+        .act-item { cursor: pointer; text-align: center; color: #aaa; transition: var(--smooth); }
+        .act-item i { font-style: normal; font-size: 1.6rem; display: block; }
+        .act-item b { font-size: 0.9rem; color: var(--main); display: block; }
+        .act-item.active { color: var(--main); transform: scale(1.1); }
+
+        .tg-comments-area { padding: 30px 5%; background: #050505; }
+        
+        #auth-screen { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a, #050505); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
+        .login-box { width: 90%; max-width: 380px; text-align: center; padding: 40px; border-radius: 24px; background: rgba(20,20,20,0.8); border: 1px solid #333; backdrop-filter: blur(20px); }
+        .login-box input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; background: #111; color: #fff; text-align: center; font-family: 'Cairo'; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 600px) { :root { --card-w: 140px; } }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
     <div class="login-box">
-        <h1 style="color:var(--main); font-size:3rem; margin-bottom:20px;">ROD</h1>
-        <input type="text" id="user" placeholder="المستخدم">
-        <input type="password" id="pass" placeholder="الرمز">
-        <button class="btn-nav" style="width:100%; padding:15px;" onclick="handleLogin()">دخول</button>
+        <div class="logo" style="justify-content:center; font-size: 4rem; margin-bottom: 15px;">
+            <span class="logo-text">ROD</span><span class="logo-icon">▸</span>
+        </div>
+        <input type="text" id="user" placeholder="اسم المستخدم">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button class="btn-main" style="width:100%; padding:15px;" onclick="handleLogin()">دخول</button>
     </div>
 </div>
 
 <div id="main-content" style="display:none;">
     <header>
-        <button class="btn-nav btn-secondary" onclick="handleLogout()">خروج</button>
-        <a href="#" class="logo">ROD<span>▸</span></a>
+        <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:6px 12px; border-radius:8px; cursor:pointer;">خروج</button>
+        <a href="#" class="logo" onclick="location.reload()">
+            <span class="logo-text">ROD</span><span class="logo-icon">▸</span>
+        </a>
     </header>
 
-    <div class="search-container">
-        <input type="text" class="search-box" id="searchInput" placeholder="ابحث عن فيلم، مسلسل، أو قسم..." oninput="filterMovies()">
+    <div class="search-area">
+        <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن أفلام أو أقسام..." oninput="filterMovies()">
     </div>
 
-    <div id="app-body"></div>
+    <div id="app-body" style="padding-top: 10px;"></div>
 </div>
 
 <div id="player">
     <div class="p-header">
-        <button class="btn-nav btn-secondary" onclick="closePlayer()">رجوع</button>
-        <button class="btn-nav" style="margin-right:10px;" onclick="closePlayer()">الرئيسية</button>
-        <div id="p-title-nav" style="margin-right:auto; font-weight:700; font-size:0.9rem;"></div>
+        <button onclick="closePlayer()" style="background:#222; border:none; padding:8px 20px; border-radius:10px; color:#fff; cursor:pointer; font-family:'Cairo';">رجوع</button>
+        <button onclick="closePlayer()" class="btn-main" style="margin-right:10px;">الرئيسية</button>
+        <div id="video-title-nav" style="margin-right:auto; font-weight:700; color:#fff;"></div>
     </div>
     
-    <video id="main-vid" controls playsinline></video>
+    <video id="main-vid" controls playsinline controlsList="nodownload"></video>
 
-    <div class="movie-details">
-        <h1 id="p-title-main"></h1>
-        <p style="color:#666;">مشاهدة ممتعة عبر منصة ROD</p>
+    <div class="movie-info-section">
+        <h1 id="main-movie-title"></h1>
+        <p style="color:#666; margin-top:5px;">بواسطة منصة ROD للترفيه</p>
+    </div>
+    
+    <div class="p-actions">
+        <div class="act-item" onclick="react(this)"><i>👍</i><b id="l-count">0</b><span>أعجبني</span></div>
+        <div class="act-item" onclick="react(this)"><i>👎</i><b id="d-count">0</b><span>لم يعجبني</span></div>
+        <div class="act-item" onclick="react(this)"><i>❤️</i><b id="f-count">0</b><span>مفضلة</span></div>
+    </div>
+
+    <div style="padding: 25px 5% 10px; font-size: 1.2rem; font-weight: 700; color: var(--main);">قد يعجبك أيضاً</div>
+    <div id="similar-list" class="row-container" style="padding: 0 5% 30px;"></div>
+
+    <div class="tg-comments-area">
+        <div style="border-top: 1px solid #222; padding-top: 20px;" id="tg-container"></div>
     </div>
 </div>
 
@@ -120,21 +144,25 @@
     const REPO = "ha8680878-lab/cinema-local";
     let moviesData = [];
 
+    window.onload = async () => {
+        if(localStorage.getItem('ROD_AUTH_KEY') === 'active') {
+            document.getElementById('main-content').style.display = 'block';
+            await loadApp();
+            checkUrlState();
+        } else {
+            document.getElementById('auth-screen').style.display = 'flex';
+        }
+    };
+
     async function handleLogin() {
         const u = document.getElementById('user').value;
         const p = document.getElementById('pass').value;
         const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?v=${Date.now()}`);
         const keys = await res.json();
         if(keys.find(k => k.user === u && k.pass === p)) {
-            localStorage.setItem('ROD_AUTH', 'true');
+            localStorage.setItem('ROD_AUTH_KEY', 'active');
             location.reload();
-        } else { alert("خطأ!"); }
-    }
-
-    if(localStorage.getItem('ROD_AUTH')) {
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        loadApp();
+        } else { alert("خطأ في البيانات"); }
     }
 
     async function loadApp() {
@@ -145,13 +173,13 @@
 
     function renderRows(data) {
         const body = document.getElementById('app-body');
-        const cats = [...new Set(data.map(m => m.category || "أفلام مختارة"))];
-        body.innerHTML = cats.map(cat => `
+        const categories = [...new Set(data.map(m => m.category || "أفلام مختارة"))];
+        body.innerHTML = categories.map(cat => `
             <div class="row">
                 <div class="row-title">${cat}</div>
                 <div class="row-container">
                     ${data.filter(m => (m.category || "أفلام مختارة") === cat).map(m => `
-                        <div class="card" onclick="openPlayer('${m.url}', '${m.title}')">
+                        <div class="card" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
                             <img src="${m.poster}" loading="lazy">
                             <div class="card-title">${m.title}</div>
                         </div>
@@ -161,31 +189,85 @@
         `).join('');
     }
 
-    // دالة البحث
     function filterMovies() {
-        const q = document.getElementById('searchInput').value.toLowerCase();
+        const query = document.getElementById('searchInput').value.toLowerCase();
         const filtered = moviesData.filter(m => 
-            m.title.toLowerCase().includes(q) || 
-            (m.category && m.category.toLowerCase().includes(q))
+            m.title.toLowerCase().includes(query) || 
+            (m.category && m.category.toLowerCase().includes(query))
         );
         renderRows(filtered);
     }
 
-    function openPlayer(url, title) {
-        document.getElementById('p-title-nav').innerText = title;
-        document.getElementById('p-title-main').innerText = title;
+    function openPlayer(url, title, cat, skipHistory = false) {
+        document.getElementById('video-title-nav').innerText = title;
+        document.getElementById('main-movie-title').innerText = title;
         const v = document.getElementById('main-vid');
         v.src = url;
         document.getElementById('player').style.display = 'flex';
         v.play();
+        
+        if(!skipHistory) {
+            const state = { url, title, cat };
+            window.location.hash = "view=" + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+        }
+
+        document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 200;
+        document.getElementById('d-count').innerText = Math.floor(Math.random() * 10);
+        document.getElementById('f-count').innerText = Math.floor(Math.random() * 300) + 100;
+
+        const similar = moviesData.filter(m => m.category === cat && m.title !== title);
+        document.getElementById('similar-list').innerHTML = similar.map(m => `
+            <div class="card" style="flex: 0 0 130px;" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
+                <img src="${m.poster}" style="height: 180px;">
+                <div class="card-title" style="font-size:0.7rem; padding-top:15px;">${m.title}</div>
+            </div>
+        `).join('') || "<p style='padding:20px; color:#444;'>لا توجد أفلام مشابهة</p>";
+        
+        loadTelegramComments(title);
+    }
+
+    function loadTelegramComments(pageTitle) {
+        const container = document.getElementById('tg-container');
+        container.innerHTML = "<h3 style='color:#444; font-size:0.9rem; margin-bottom:15px;'>التعليقات والمناقشة:</h3>";
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = "https://comments.app/js/widget.js?3";
+        s.setAttribute("data-comments-app-website", "O_vGvP9T"); 
+        s.setAttribute("data-color", "FF9800");
+        s.setAttribute("data-dark", "1");
+        s.setAttribute("data-page-id", pageTitle);
+        container.appendChild(s);
+    }
+
+    function checkUrlState() {
+        const hash = window.location.hash;
+        if(hash.startsWith("#view=")) {
+            try {
+                const base64 = hash.split("view=")[1];
+                const state = JSON.parse(decodeURIComponent(escape(atob(base64))));
+                openPlayer(state.url, state.title, state.cat, true);
+            } catch(e) {}
+        }
     }
 
     function closePlayer() {
         document.getElementById('player').style.display = 'none';
         document.getElementById('main-vid').pause();
+        window.location.hash = "";
     }
 
-    function handleLogout() { localStorage.removeItem('ROD_AUTH'); location.reload(); }
+    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.reload(); }
+
+    function react(el) {
+        const count = el.querySelector('b');
+        if(!el.classList.contains('active')) {
+            count.innerText = parseInt(count.innerText) + 1;
+            el.classList.add('active');
+        } else {
+            count.innerText = parseInt(count.innerText) - 1;
+            el.classList.remove('active');
+        }
+    }
 </script>
 </body>
 </html>
