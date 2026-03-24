@@ -25,7 +25,7 @@
             user-select: none;
         }
 
-        /* --- تأثيرات الشعار المتحرك (Animated Logo CSS) --- */
+        /* --- تأثيرات الشعار المتحرك --- */
         .logo { 
             font-size: 1.8rem; 
             font-weight: 900; 
@@ -38,31 +38,26 @@
             z-index: 1;
         }
 
-        /* الحروف البرتقالية مع تأثير توهج نبضي */
         .logo-text {
             position: relative;
             animation: logoPulse 2s infinite ease-in-out;
             text-shadow: 0 0 10px rgba(255,152,0,0.5);
         }
 
-        /* تأثير علامة المشغل المتحركة ▸ */
         .logo-icon {
-            font-family: Arial, sans-serif; /* لضمان شكل الرمز */
+            font-family: Arial, sans-serif;
             animation: iconSlide 1.5s infinite alternate ease-in-out;
         }
 
-        /* تعريف حركة النبض والتوهج */
         @keyframes logoPulse {
             0%, 100% { text-shadow: 0 0 10px rgba(255,152,0,0.5); transform: scale(1); }
             50% { text-shadow: 0 0 25px rgba(255,152,0,0.8), 0 0 40px rgba(255,152,0,0.3); transform: scale(1.02); }
         }
 
-        /* تعريف حركة انزلاق الرمز */
         @keyframes iconSlide {
             0% { transform: translateX(0px) scale(1); opacity: 0.8; }
             100% { transform: translateX(5px) scale(1.1); opacity: 1; text-shadow: 0 0 15px rgba(255,152,0,0.8); }
         }
-        /* --- نهاية تأثيرات الشعار --- */
 
         header { 
             display: flex; 
@@ -75,7 +70,6 @@
             top: 0; 
             z-index: 1000; 
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
         }
         
         .home-btn { 
@@ -101,12 +95,10 @@
         .login-box input { 
             width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; 
             background: #111; color: #fff; text-align: center; font-family: 'Cairo'; font-size: 1rem;
-            transition: var(--smooth);
         }
-        .login-box input:focus { border-color: var(--main); box-shadow: 0 0 15px rgba(255,152,0,0.2); }
         .login-btn { 
             width: 100%; padding: 15px; background: var(--main); border: none; border-radius: 12px; 
-            font-weight: 900; cursor: pointer; color: #000; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255,152,0,0.2);
+            font-weight: 900; cursor: pointer; color: #000; font-size: 1.1rem;
         }
 
         .row { margin-bottom: 35px; padding-right: 5%; animation: fadeIn 1s ease; }
@@ -123,13 +115,9 @@
             flex: 0 0 var(--card-w); border-radius: 14px; overflow: hidden; position: relative;
             background: #111; border: 1px solid rgba(255,255,255,0.05); transition: var(--smooth); cursor: pointer;
         }
-        .card:hover { transform: translateY(-8px) scale(1.04); border-color: var(--main); box-shadow: 0 15px 30px rgba(0,0,0,0.8); }
+        .card:hover { transform: translateY(-8px) scale(1.04); border-color: var(--main); }
         
-        .card img { 
-            width: 100%; height: 230px; object-fit: cover; object-position: center;
-            transition: var(--smooth); filter: brightness(0.9);
-        }
-        .card:hover img { filter: brightness(1.1); }
+        .card img { width: 100%; height: 230px; object-fit: cover; }
         
         .card-title { 
             position: absolute; bottom: 0; left: 0; right: 0; 
@@ -142,12 +130,17 @@
         
         video { width: 100%; max-height: 70vh; background: #000; box-shadow: 0 0 50px rgba(0,0,0,1); }
         
-        .p-actions { display: flex; justify-content: space-around; padding: 25px 5%; background: #0a0a0a; border-bottom: 1px solid #1a1a1a; }
+        /* تصميم عنوان الفيلم أسفل المشغل */
+        .movie-info-section { padding: 25px 5% 10px; text-align: right; border-bottom: 1px solid #111; }
+        .movie-info-section h1 { color: var(--main); font-size: 1.8rem; margin: 0; font-weight: 900; }
+        .movie-info-section p { color: #666; font-size: 0.85rem; margin-top: 5px; }
+
+        .p-actions { display: flex; justify-content: space-around; padding: 20px 5%; background: #0a0a0a; }
         .act-item { cursor: pointer; text-align: center; color: #aaa; transition: var(--smooth); }
-        .act-item i { font-style: normal; font-size: 1.6rem; display: block; margin-bottom: 5px; }
+        .act-item i { font-style: normal; font-size: 1.6rem; display: block; }
         .act-item b { font-size: 0.9rem; color: var(--main); display: block; }
         .act-item span { font-size: 0.7rem; color: #666; }
-        .act-item:hover, .act-item.active { color: var(--main); transform: scale(1.1); }
+        .act-item.active { color: var(--main); transform: scale(1.1); }
 
         .tg-comments-area { padding: 30px 5%; background: #050505; }
         
@@ -155,8 +148,7 @@
 
         @media (max-width: 600px) {
             :root { --card-w: 140px; }
-            .row-title { font-size: 1.1rem; }
-            .login-box { padding: 30px 20px; }
+            .movie-info-section h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -182,7 +174,7 @@
         </div>
         <a href="#" class="logo" onclick="location.reload()">
             <span class="logo-text">ROD</span><span class="logo-icon">▸</span>
-        </div>
+        </a>
     </header>
     <div id="app-body" style="padding-top: 20px;"></div>
 </div>
@@ -190,10 +182,15 @@
 <div id="player">
     <div class="p-header">
         <button onclick="closePlayer()" style="background:var(--main); border:none; padding:8px 20px; border-radius:10px; font-weight:900; cursor:pointer; font-family:'Cairo';">رجوع</button>
-        <div id="video-title" style="margin-right:20px; font-weight:700; color:#fff;"></div>
+        <div id="video-title-nav" style="margin-right:20px; font-weight:700; color:#fff;"></div>
     </div>
     
     <video id="main-vid" controls playsinline controlsList="nodownload"></video>
+
+    <div class="movie-info-section">
+        <h1 id="main-movie-title"></h1>
+        <p>مشاهدة مباشرة بجودة عالية عبر ROD</p>
+    </div>
     
     <div class="p-actions">
         <div class="act-item" onclick="react(this)"><i>👍</i><b id="l-count">0</b><span>أعجبني</span></div>
@@ -233,10 +230,10 @@
                 localStorage.setItem('ROD_AUTH_KEY', 'active');
                 location.reload();
             } else { alert("عذراً، بيانات الدخول غير صحيحة"); }
-        } catch(e) { alert("حدث خطأ في الاتصال بالسيرفر"); }
+        } catch(e) { alert("خطأ في السيرفر"); }
     }
 
-    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.href = "index.html"; }
+    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.reload(); }
 
     async function loadApp() {
         const res = await fetch(`movies.json?v=${Date.now()}`);
@@ -260,7 +257,9 @@
     }
 
     function openPlayer(url, title, cat, skipHistory = false) {
-        document.getElementById('video-title').innerText = title;
+        document.getElementById('video-title-nav').innerText = title;
+        document.getElementById('main-movie-title').innerText = title; // تحديث الاسم أسفل الفيديو
+        
         const v = document.getElementById('main-vid');
         v.src = url;
         document.getElementById('player').style.display = 'flex';
@@ -272,7 +271,7 @@
         }
 
         document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 200;
-        document.getElementById('d-count').innerText = Math.floor(Math.random() * 12);
+        document.getElementById('d-count').innerText = Math.floor(Math.random() * 10);
         document.getElementById('f-count').innerText = Math.floor(Math.random() * 300) + 100;
 
         const similar = moviesData.filter(m => m.category === cat && m.title !== title);
@@ -281,14 +280,14 @@
                 <img src="${m.poster}" style="height: 180px;">
                 <div class="card-title" style="font-size:0.7rem; padding-top:15px;">${m.title}</div>
             </div>
-        `).join('') || "<p style='color:#444; margin-right:5%;'>لا توجد أفلام مشابهة حالياً</p>";
+        `).join('') || "<p style='padding:20px; color:#444;'>لا توجد أفلام مشابهة</p>";
         
         loadTelegramComments(title);
     }
 
     function loadTelegramComments(pageTitle) {
         const container = document.getElementById('tg-container');
-        container.innerHTML = "<h3 style='color:#444; font-size:0.9rem; margin-bottom:15px;'>التعليقات والمناقشة:</h3>";
+        container.innerHTML = "<h3 style='color:#444; font-size:0.9rem; margin-bottom:15px;'>التعليقات:</h3>";
         const s = document.createElement('script');
         s.async = true;
         s.src = "https://comments.app/js/widget.js?3";
@@ -323,11 +322,9 @@
         if(!el.classList.contains('active')) {
             count.innerText = parseInt(count.innerText) + 1;
             el.classList.add('active');
-            el.style.color = "var(--main)";
         } else {
             count.innerText = parseInt(count.innerText) - 1;
             el.classList.remove('active');
-            el.style.color = "#aaa";
         }
     }
 </script>
