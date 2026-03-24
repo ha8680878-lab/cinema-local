@@ -6,129 +6,136 @@
     <title>ROD | منصة الترفيه</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #ff9800; --bg: #080808; --card-w: 150px; }
+        :root { --main: #ff9800; --bg: #080808; --card-w: 155px; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
 
         /* الهيدر */
         header { display: flex; justify-content: space-between; align-items: center; padding: 12px 5%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-decoration: none; }
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-decoration: none; letter-spacing: 2px; }
         .nav-tools { display: flex; gap: 15px; align-items: center; }
-        .home-icon { cursor: pointer; font-size: 1.2rem; color: #fff; text-decoration: none; }
+        .home-btn { cursor: pointer; font-size: 0.9rem; color: #fff; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; text-decoration: none; border: 1px solid #444; }
 
         /* تسجيل الدخول */
         #auth-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
-        .login-box { width: 85%; max-width: 360px; text-align: center; background: #111; padding: 40px 25px; border-radius: 20px; border: 1px solid #333; }
-        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; text-align: center; font-family: 'Cairo'; }
+        .login-box { width: 85%; max-width: 360px; text-align: center; background: #111; padding: 40px 25px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; text-align: center; font-family: 'Cairo'; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--main); }
         .login-btn { width: 100%; padding: 14px; background: var(--main); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; font-size: 1.1rem; }
 
-        /* السلايدرز */
+        /* السلايدرز والأقسام */
         .row { margin-bottom: 25px; padding-right: 5%; }
         .row-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--main); border-right: 4px solid var(--main); padding-right: 12px; }
         .row-container { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; scrollbar-width: none; }
         .row-container::-webkit-scrollbar { display: none; }
 
-        /* الكارت */
-        .card { flex: 0 0 var(--card-w); border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; position: relative; }
+        /* كارت الفيلم */
+        .card { flex: 0 0 var(--card-w); border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; position: relative; background: #111; }
         .card:hover { transform: scale(1.03); border-color: var(--main); }
-        .card img { width: 100%; height: 210px; object-fit: cover; }
-        .card-title { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 15px 8px 8px; font-size: 0.8rem; text-align: center; }
+        .card img { width: 100%; height: 215px; object-fit: cover; pointer-events: none; }
+        .card-title { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 20px 8px 8px; font-size: 0.8rem; text-align: center; font-weight: 600; }
 
-        /* المشغل */
+        /* المشغل الاحترافي */
         #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
-        .p-nav { padding: 15px 5%; display: flex; align-items: center; background: #111; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 2; }
-        video { width: 100%; background: #000; }
+        .p-header { padding: 15px 5%; display: flex; align-items: center; background: #111; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 2; }
+        .back-btn { background: var(--main); color: #000; border: none; padding: 7px 18px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem; }
+        video { width: 100%; max-height: 65vh; background: #000; }
         
-        .p-actions { display: flex; justify-content: center; gap: 40px; padding: 20px; border-bottom: 1px solid #222; }
-        .act-btn { cursor: pointer; text-align: center; font-size: 1.2rem; color: #888; transition: 0.3s; }
-        .act-btn:hover, .act-btn.active { color: var(--main); transform: scale(1.1); }
-        .act-btn span { display: block; font-size: 0.7rem; margin-top: 4px; color: #fff; }
+        /* شريط التفاعل (الاعجابات الوهمية) */
+        .p-actions { display: flex; justify-content: center; gap: 30px; padding: 20px; border-bottom: 1px solid #222; background: #0a0a0a; }
+        .act-item { cursor: pointer; text-align: center; color: #888; transition: 0.3s; min-width: 60px; }
+        .act-item i { font-style: normal; font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .act-item b { font-size: 0.75rem; color: var(--main); display: block; }
+        .act-item span { font-size: 0.65rem; color: #fff; opacity: 0.7; }
+        .act-item.active { color: var(--main); transform: scale(1.1); }
 
-        .similar-title { padding: 20px 5% 10px; font-size: 1.1rem; font-weight: 700; color: var(--main); }
+        .similar-head { padding: 20px 5% 10px; font-size: 1.1rem; font-weight: 700; color: var(--main); }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
     <div class="login-box">
-        <h1 style="color:var(--main); margin-bottom:10px;">▸ ROD</h1>
-        <p style="color:#888; font-size:0.9rem; margin-bottom:25px;">مرحباً بك في عالمك الخاص</p>
-        <input type="text" id="u" placeholder="اسم المستخدم">
-        <input type="password" id="p" placeholder="كلمة المرور">
-        <button class="login-btn" onclick="doLogin()">دخول</button>
+        <h1 style="color:var(--main); margin:0; font-size: 3.5rem;">▸ ROD</h1>
+        <p style="color:#888; margin-bottom:30px;">متعة المشاهدة تبدأ من هنا</p>
+        <input type="text" id="user" placeholder="اسم المستخدم" spellcheck="false">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button class="login-btn" onclick="handleLogin()">دخول المنصة</button>
     </div>
 </div>
 
 <div id="main-content" style="display:none;">
     <header>
         <div class="nav-tools">
-            <button onclick="doLogout()" style="background:none; border:1px solid #333; color:#666; padding:4px 10px; border-radius:5px; cursor:pointer;">خروج</button>
-            <a href="#" class="home-icon" onclick="location.reload()">🏠 الرئيسية</a>
+            <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:4px 10px; border-radius:5px; cursor:pointer;">خروج</button>
+            <a href="#" class="home-btn" onclick="location.reload()">الرئيسية</a>
         </div>
         <div class="logo">ROD ▸</div>
     </header>
-    <div id="content-list" style="margin-top:20px;"></div>
+    <div id="app-body"></div>
 </div>
 
 <div id="player">
-    <div class="p-nav">
-        <button onclick="closeP()" style="background:var(--main); border:none; padding:6px 15px; border-radius:5px; font-weight:bold; cursor:pointer;">رجوع</button>
-        <div id="p-title" style="margin-right:15px; font-weight:bold; font-size:0.9rem;"></div>
+    <div class="p-header">
+        <button class="back-btn" onclick="closePlayer()">رجوع</button>
+        <div id="video-title" style="margin-right:15px; font-weight:bold; font-size:0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
     </div>
-    <video id="v-play" controls playsinline></video>
+    
+    <video id="main-vid" controls playsinline controlsList="nodownload"></video>
     
     <div class="p-actions">
-        <div class="act-btn" onclick="toggleLike(this)">👍<span>أعجبني</span></div>
-        <div class="act-btn" onclick="toggleLike(this)">👎<span>لم يعجبني</span></div>
-        <div class="act-btn" onclick="alert('تمت الإضافة للمفضلة')">❤️<span>مفضلة</span></div>
+        <div class="act-item" onclick="react(this)"><i>👍</i><b id="l-count">0</b><span>أعجبني</span></div>
+        <div class="act-item" onclick="react(this)"><i>👎</i><b id="d-count">0</b><span>لم يعجبني</span></div>
+        <div class="act-item" onclick="react(this)"><i>❤️</i><b id="f-count">0</b><span>مفضلة</span></div>
+        <div class="act-item" onclick="alert('سيتم توفير التحميل قريباً للمشتركين')"><i>📥</i><b>+99</b><span>تحميل</span></div>
     </div>
 
-    <div class="similar-title">اقتراحات قد تعجبك</div>
-    <div id="similar-movies" class="row-container" style="padding: 0 5% 30px;"></div>
+    <div class="similar-head">مقترحات مشابهة</div>
+    <div id="similar-list" class="row-container" style="padding: 0 5% 40px;"></div>
     
-    <div id="giscus-slot" style="padding:20px 5%;"></div>
+    <div id="giscus-container" style="padding: 20px 5%;"></div>
 </div>
 
 <script>
-    const GITHUB_REPO = "ha8680878-lab/cinema-local";
-    let allMovies = [];
+    const REPO = "ha8680878-lab/cinema-local";
+    let moviesData = [];
 
     window.onload = () => {
-        if(localStorage.getItem('ROD_SESSION_FINAL') === 'true') {
+        if(localStorage.getItem('ROD_AUTH_KEY') === 'active') {
             document.getElementById('main-content').style.display = 'block';
-            loadFullApp();
+            loadApp();
         } else {
             document.getElementById('auth-screen').style.display = 'flex';
         }
     };
 
-    async function doLogin() {
-        const userVal = document.getElementById('u').value;
-        const passVal = document.getElementById('p').value;
+    async function handleLogin() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
         try {
-            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/keys.json?v=${Date.now()}`);
+            const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?nocache=${Date.now()}`);
             const keys = await res.json();
-            if(keys.find(k => k.user === userVal && k.pass === passVal)) {
-                localStorage.setItem('ROD_SESSION_FINAL', 'true');
+            if(keys.find(k => k.user === u && k.pass === p)) {
+                localStorage.setItem('ROD_AUTH_KEY', 'active');
                 location.reload();
-            } else { alert("خطأ في البيانات!"); }
+            } else { alert("بيانات دخول خاطئة!"); }
         } catch(e) { alert("فشل الاتصال"); }
     }
 
-    function doLogout() { localStorage.removeItem('ROD_SESSION_FINAL'); location.reload(); }
+    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.reload(); }
 
-    async function loadFullApp() {
+    async function loadApp() {
         const res = await fetch(`movies.json?v=${Date.now()}`);
-        allMovies = await res.json();
-        const list = document.getElementById('content-list');
-        const cats = [...new Set(allMovies.map(m => m.category || "أفلام مختارة"))];
+        moviesData = await res.json();
+        const body = document.getElementById('app-body');
+        const categories = [...new Set(moviesData.map(m => m.category || "أفلام مختارة"))];
         
-        list.innerHTML = cats.map(c => `
+        body.innerHTML = categories.map(cat => `
             <div class="row">
-                <div class="row-title">${c}</div>
+                <div class="row-title">${cat}</div>
                 <div class="row-container">
-                    ${allMovies.filter(m => (m.category || "أفلام مختارة") === c).map(m => `
-                        <div class="card" onclick="openP('${m.url}', '${m.title}', '${m.category}')">
+                    ${moviesData.filter(m => (m.category || "أفلام مختارة") === cat).map(m => `
+                        <div class="card" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
                             <img src="${m.poster}">
                             <div class="card-title">${m.title}</div>
                         </div>
@@ -138,41 +145,53 @@
         `).join('');
     }
 
-    function openP(url, title, cat) {
-        document.getElementById('p-title').innerText = title;
-        const v = document.getElementById('v-play');
+    function openPlayer(url, title, cat) {
+        document.getElementById('video-title').innerText = title;
+        const v = document.getElementById('main-vid');
         v.src = url;
         document.getElementById('player').style.display = 'flex';
         v.play();
         
-        // اقتراحات مشابهة (من نفس القسم)
-        const similar = allMovies.filter(m => m.category === cat && m.title !== title);
-        document.getElementById('similar-movies').innerHTML = similar.map(m => `
-            <div class="card" style="flex: 0 0 130px;" onclick="openP('${m.url}', '${m.title}', '${m.category}')">
+        // توليد أرقام وهمية عند كل فتح للفيلم
+        document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 100;
+        document.getElementById('d-count').innerText = Math.floor(Math.random() * 10) + 1;
+        document.getElementById('f-count').innerText = Math.floor(Math.random() * 200) + 50;
+
+        // مقترحات مشابهة
+        const similar = moviesData.filter(m => m.category === cat && m.title !== title);
+        document.getElementById('similar-list').innerHTML = similar.map(m => `
+            <div class="card" style="flex: 0 0 130px;" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
                 <img src="${m.poster}" style="height: 180px;">
                 <div class="card-title" style="font-size:0.7rem;">${m.title}</div>
             </div>
-        `).join('') || "<p style='font-size:0.8rem; color:#555;'>لا توجد اقتراحات حالياً</p>";
+        `).join('') || "<p style='color:#444; font-size:0.8rem;'>لا توجد اقتراحات حالياً</p>";
         
         loadGiscus();
     }
 
-    function closeP() {
-        document.getElementById('player').style.display = 'none';
-        document.getElementById('v-play').pause();
+    function react(el) {
+        const count = el.querySelector('b');
+        if(!el.classList.contains('active')) {
+            count.innerText = parseInt(count.innerText) + 1;
+            el.classList.add('active');
+        } else {
+            count.innerText = parseInt(count.innerText) - 1;
+            el.classList.remove('active');
+        }
     }
 
-    function toggleLike(btn) {
-        btn.classList.toggle('active');
-        if(btn.innerText.includes('👍')) alert("شكراً لتقييمك الإيجابي!");
+    function closePlayer() {
+        document.getElementById('player').style.display = 'none';
+        document.getElementById('main-vid').pause();
+        document.getElementById('main-vid').src = "";
     }
 
     function loadGiscus() {
-        const slot = document.getElementById('giscus-slot');
-        slot.innerHTML = "";
+        const container = document.getElementById('giscus-container');
+        container.innerHTML = "";
         const s = document.createElement('script');
         s.src = "https://giscus.app/client.js";
-        s.setAttribute("data-repo", GITHUB_REPO);
+        s.setAttribute("data-repo", REPO);
         s.setAttribute("data-repo-id", "R_kgDON7u00A");
         s.setAttribute("data-category", "Announcements");
         s.setAttribute("data-category-id", "DIC_kwDON7u00M4CnH0Y");
@@ -180,7 +199,7 @@
         s.setAttribute("data-theme", "dark");
         s.setAttribute("data-lang", "ar");
         s.crossOrigin = "anonymous"; s.async = true;
-        slot.appendChild(s);
+        container.appendChild(s);
     }
 </script>
 </body>
