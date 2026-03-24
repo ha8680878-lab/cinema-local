@@ -4,74 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ROD | منصة الترفيه</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #ff9800; --bg: #080808; --card-w: 155px; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
+        /* تعريف الألوان الأساسية للمنصة */
+        :root { 
+            --main: #ff9800; 
+            --bg: #050505; 
+            --card-w: 160px; 
+            --glass: rgba(15, 15, 15, 0.85);
+            --smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        header { display: flex; justify-content: space-between; align-items: center; padding: 12px 5%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-decoration: none; }
-        .nav-tools { display: flex; gap: 10px; }
-        .home-btn { cursor: pointer; font-size: 0.85rem; color: #fff; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; text-decoration: none; border: 1px solid #444; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
-        .login-box { width: 85%; max-width: 360px; text-align: center; background: #111; padding: 40px 25px; border-radius: 20px; border: 1px solid #333; }
-        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; text-align: center; font-family: 'Cairo'; outline: none; }
-        .login-btn { width: 100%; padding: 14px; background: var(--main); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; }
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'Cairo', sans-serif; 
+            margin: 0; 
+            overflow-x: hidden;
+            user-select: none; /* منع النسخ للحفاظ على شكل الموقع */
+        }
 
-        .row { margin-bottom: 25px; padding-right: 5%; }
-        .row-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--main); border-right: 4px solid var(--main); padding-right: 12px; }
-        .row-container { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; scrollbar-width: none; }
+        /* رأس الصفحة الاحترافي */
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px 5%; 
+            background: var(--glass); 
+            backdrop-filter: blur(15px); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--main); text-shadow: 0 0 15px rgba(255,152,0,0.3); }
+        
+        .home-btn { 
+            background: linear-gradient(45deg, var(--main), #ffb74d); 
+            color: #000; 
+            padding: 6px 16px; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            text-decoration: none; 
+            font-size: 0.85rem;
+            transition: var(--smooth);
+        }
+
+        /* واجهة تسجيل الدخول */
+        #auth-screen { 
+            position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; 
+        }
+        .login-box { 
+            width: 90%; max-width: 380px; text-align: center; background: rgba(20,20,20,0.8); 
+            padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+        }
+        .login-box input { 
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; 
+            background: #111; color: #fff; text-align: center; font-family: 'Cairo'; font-size: 1rem;
+            transition: var(--smooth);
+        }
+        .login-box input:focus { border-color: var(--main); box-shadow: 0 0 15px rgba(255,152,0,0.2); }
+        .login-btn { 
+            width: 100%; padding: 15px; background: var(--main); border: none; border-radius: 12px; 
+            font-weight: 900; cursor: pointer; color: #000; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255,152,0,0.2);
+        }
+
+        /* صفوف الأفلام */
+        .row { margin-bottom: 35px; padding-right: 5%; animation: fadeIn 1s ease; }
+        .row-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .row-title::before { content: ''; width: 4px; height: 20px; background: var(--main); border-radius: 10px; }
+        
+        .row-container { 
+            display: flex; overflow-x: auto; gap: 18px; padding: 10px 5px 20px 0; 
+            scrollbar-width: none; scroll-behavior: smooth;
+        }
         .row-container::-webkit-scrollbar { display: none; }
 
-        .card { flex: 0 0 var(--card-w); border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; position: relative; background: #111; }
-        .card img { width: 100%; height: 215px; object-fit: cover; pointer-events: none; }
-        .card-title { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 20px 8px 8px; font-size: 0.8rem; text-align: center; font-weight: 600; }
-
-        #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
-        .p-header { padding: 15px 5%; display: flex; align-items: center; background: #111; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 2; }
-        .back-btn { background: var(--main); color: #000; border: none; padding: 7px 18px; border-radius: 6px; font-weight: 900; cursor: pointer; }
-        video { width: 100%; max-height: 65vh; background: #000; }
+        /* كارت الفيلم بتأثيرات الحركة */
+        .card { 
+            flex: 0 0 var(--card-w); border-radius: 14px; overflow: hidden; position: relative;
+            background: #111; border: 1px solid rgba(255,255,255,0.05); transition: var(--smooth); cursor: pointer;
+        }
+        .card:hover { transform: translateY(-8px) scale(1.04); border-color: var(--main); box-shadow: 0 15px 30px rgba(0,0,0,0.8); }
         
-        .p-actions { display: flex; justify-content: center; gap: 30px; padding: 20px; border-bottom: 1px solid #222; background: #0a0a0a; }
-        .act-item { cursor: pointer; text-align: center; color: #888; transition: 0.3s; min-width: 60px; }
-        .act-item i { font-style: normal; font-size: 1.4rem; display: block; margin-bottom: 4px; }
-        .act-item b { font-size: 0.75rem; color: var(--main); display: block; }
-        .act-item span { font-size: 0.65rem; color: #fff; opacity: 0.7; }
-        .act-item.active { color: var(--main); transform: scale(1.1); }
+        .card img { 
+            width: 100%; height: 230px; object-fit: cover; object-position: center;
+            transition: var(--smooth); filter: brightness(0.9);
+        }
+        .card:hover img { filter: brightness(1.1); }
+        
+        .card-title { 
+            position: absolute; bottom: 0; left: 0; right: 0; 
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 25px 10px 10px; font-size: 0.85rem; text-align: center; font-weight: 600;
+        }
 
-        .similar-head { padding: 20px 5% 10px; font-size: 1.1rem; font-weight: 700; color: var(--main); }
+        /* المشغل (Player) */
+        #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
+        .p-header { padding: 15px 5%; display: flex; align-items: center; background: var(--glass); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 5; }
+        
+        video { width: 100%; max-height: 70vh; background: #000; box-shadow: 0 0 50px rgba(0,0,0,1); }
+        
+        .p-actions { display: flex; justify-content: space-around; padding: 25px 5%; background: #0a0a0a; border-bottom: 1px solid #1a1a1a; }
+        .act-item { cursor: pointer; text-align: center; color: #aaa; transition: var(--smooth); }
+        .act-item i { font-style: normal; font-size: 1.6rem; display: block; margin-bottom: 5px; }
+        .act-item b { font-size: 0.9rem; color: var(--main); display: block; }
+        .act-item span { font-size: 0.7rem; color: #666; }
+        .act-item:hover, .act-item.active { color: var(--main); transform: scale(1.1); }
+
+        .tg-comments-area { padding: 30px 5%; background: #050505; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* للهواتف الصغيرة */
+        @media (max-width: 600px) {
+            :root { --card-w: 140px; }
+            .row-title { font-size: 1.1rem; }
+            .login-box { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
     <div class="login-box">
-        <h1 style="color:var(--main); margin:0; font-size: 3rem;">▸ ROD</h1>
-        <p style="color:#888; margin-bottom:30px;">سجل دخولك للمشاهدة</p>
-        <input type="text" id="user" placeholder="اسم المستخدم" spellcheck="false">
+        <h1 style="color:var(--main); margin:0; font-size: 3.5rem; letter-spacing: -2px;">ROD</h1>
+        <p style="color:#666; font-size:0.9rem; margin-bottom:30px;">بوابتك لعالم السينما الحصري</p>
+        <input type="text" id="user" placeholder="اسم المستخدم">
         <input type="password" id="pass" placeholder="كلمة المرور">
-        <button class="login-btn" onclick="handleLogin()">دخول</button>
+        <button class="login-btn" onclick="handleLogin()">تسجيل الدخول</button>
     </div>
 </div>
 
 <div id="main-content" style="display:none;">
     <header>
         <div class="nav-tools">
-            <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:4px 10px; border-radius:5px; cursor:pointer;">خروج</button>
+            <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:0.75rem;">خروج</button>
             <a href="#" class="home-btn" onclick="closePlayer()">الرئيسية</a>
         </div>
-        <div class="logo">ROD ▸</div>
+        <div class="logo">ROD</div>
     </header>
-    <div id="app-body"></div>
+    <div id="app-body" style="padding-top: 20px;"></div>
 </div>
 
 <div id="player">
     <div class="p-header">
-        <button class="back-btn" onclick="closePlayer()">رجوع</button>
-        <div id="video-title" style="margin-right:15px; font-weight:bold; font-size:0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+        <button onclick="closePlayer()" style="background:var(--main); border:none; padding:8px 20px; border-radius:10px; font-weight:900; cursor:pointer; font-family:'Cairo';">رجوع</button>
+        <div id="video-title" style="margin-right:20px; font-weight:700; color:#fff;"></div>
     </div>
+    
     <video id="main-vid" controls playsinline controlsList="nodownload"></video>
     
     <div class="p-actions">
@@ -80,9 +167,12 @@
         <div class="act-item" onclick="react(this)"><i>❤️</i><b id="f-count">0</b><span>مفضلة</span></div>
     </div>
 
-    <div class="similar-head">مقترحات مشابهة</div>
-    <div id="similar-list" class="row-container" style="padding: 0 5% 40px;"></div>
-    <div id="giscus-container" style="padding: 20px 5%;"></div>
+    <div style="padding: 25px 5% 10px; font-size: 1.2rem; font-weight: 700; color: var(--main);">قد يعجبك أيضاً</div>
+    <div id="similar-list" class="row-container" style="padding: 0 5% 30px;"></div>
+
+    <div class="tg-comments-area">
+        <div style="border-top: 1px solid #222; padding-top: 20px;" id="tg-container"></div>
+    </div>
 </div>
 
 <script>
@@ -93,7 +183,6 @@
         if(localStorage.getItem('ROD_AUTH_KEY') === 'active') {
             document.getElementById('main-content').style.display = 'block';
             await loadApp();
-            // فحص إذا كان الرابط يحتوي على معلومات فيلم محفوظ عند التحديث
             checkUrlState();
         } else {
             document.getElementById('auth-screen').style.display = 'flex';
@@ -109,8 +198,8 @@
             if(keys.find(k => k.user === u && k.pass === p)) {
                 localStorage.setItem('ROD_AUTH_KEY', 'active');
                 location.reload();
-            } else { alert("بيانات خاطئة!"); }
-        } catch(e) { alert("فشل الاتصال"); }
+            } else { alert("عذراً، بيانات الدخول غير صحيحة"); }
+        } catch(e) { alert("حدث خطأ في الاتصال بالسيرفر"); }
     }
 
     function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.href = "index.html"; }
@@ -127,7 +216,7 @@
                 <div class="row-container">
                     ${moviesData.filter(m => (m.category || "أفلام مختارة") === cat).map(m => `
                         <div class="card" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
-                            <img src="${m.poster}">
+                            <img src="${m.poster}" loading="lazy">
                             <div class="card-title">${m.title}</div>
                         </div>
                     `).join('')}
@@ -143,25 +232,39 @@
         document.getElementById('player').style.display = 'flex';
         v.play();
         
-        // حفظ حالة الفيلم في الرابط (Hash)
         if(!skipHistory) {
             const state = { url, title, cat };
             window.location.hash = "view=" + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
         }
 
-        document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 100;
-        document.getElementById('d-count').innerText = Math.floor(Math.random() * 10) + 1;
-        document.getElementById('f-count').innerText = Math.floor(Math.random() * 200) + 50;
+        // أرقام وهمية لزيادة الموثوقية
+        document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 200;
+        document.getElementById('d-count').innerText = Math.floor(Math.random() * 12);
+        document.getElementById('f-count').innerText = Math.floor(Math.random() * 300) + 100;
 
         const similar = moviesData.filter(m => m.category === cat && m.title !== title);
         document.getElementById('similar-list').innerHTML = similar.map(m => `
             <div class="card" style="flex: 0 0 130px;" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
                 <img src="${m.poster}" style="height: 180px;">
-                <div class="card-title" style="font-size:0.7rem;">${m.title}</div>
+                <div class="card-title" style="font-size:0.7rem; padding-top:15px;">${m.title}</div>
             </div>
-        `).join('') || "<p style='color:#444;'>لا توجد اقتراحات</p>";
+        `).join('') || "<p style='color:#444; margin-right:5%;'>لا توجد أفلام مشابهة حالياً</p>";
         
-        loadGiscus();
+        loadTelegramComments(title);
+    }
+
+    function loadTelegramComments(pageTitle) {
+        const container = document.getElementById('tg-container');
+        container.innerHTML = "<h3 style='color:#444; font-size:0.9rem; margin-bottom:15px;'>التعليقات والمناقشة:</h3>";
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = "https://comments.app/js/widget.js?3";
+        s.setAttribute("data-comments-app-website", "O_vGvP9T"); 
+        s.setAttribute("data-limit", "10");
+        s.setAttribute("data-color", "FF9800");
+        s.setAttribute("data-dark", "1");
+        s.setAttribute("data-page-id", pageTitle);
+        container.appendChild(s);
     }
 
     function checkUrlState() {
@@ -171,15 +274,15 @@
                 const base64 = hash.split("view=")[1];
                 const state = JSON.parse(decodeURIComponent(escape(atob(base64))));
                 openPlayer(state.url, state.title, state.cat, true);
-            } catch(e) { console.error("Hash error"); }
+            } catch(e) {}
         }
     }
 
     function closePlayer() {
         document.getElementById('player').style.display = 'none';
-        document.getElementById('main-vid').pause();
-        document.getElementById('main-vid').src = "";
-        window.location.hash = ""; // مسح الرابط للعودة للرئيسية
+        const v = document.getElementById('main-vid');
+        v.pause(); v.src = "";
+        window.location.hash = "";
     }
 
     function react(el) {
@@ -187,26 +290,12 @@
         if(!el.classList.contains('active')) {
             count.innerText = parseInt(count.innerText) + 1;
             el.classList.add('active');
+            el.style.color = "var(--main)";
         } else {
             count.innerText = parseInt(count.innerText) - 1;
             el.classList.remove('active');
+            el.style.color = "#aaa";
         }
-    }
-
-    function loadGiscus() {
-        const container = document.getElementById('giscus-container');
-        container.innerHTML = "";
-        const s = document.createElement('script');
-        s.src = "https://giscus.app/client.js";
-        s.setAttribute("data-repo", REPO);
-        s.setAttribute("data-repo-id", "R_kgDON7u00A");
-        s.setAttribute("data-category", "Announcements");
-        s.setAttribute("data-category-id", "DIC_kwDON7u00M4CnH0Y");
-        s.setAttribute("data-mapping", "title");
-        s.setAttribute("data-theme", "dark");
-        s.setAttribute("data-lang", "ar");
-        s.crossOrigin = "anonymous"; s.async = true;
-        container.appendChild(s);
     }
 </script>
 </body>
