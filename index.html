@@ -10,38 +10,30 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* الهيدر */
         header { display: flex; justify-content: space-between; align-items: center; padding: 12px 5%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-decoration: none; letter-spacing: 2px; }
-        .nav-tools { display: flex; gap: 15px; align-items: center; }
-        .home-btn { cursor: pointer; font-size: 0.9rem; color: #fff; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; text-decoration: none; border: 1px solid #444; }
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--main); text-decoration: none; }
+        .nav-tools { display: flex; gap: 10px; }
+        .home-btn { cursor: pointer; font-size: 0.85rem; color: #fff; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; text-decoration: none; border: 1px solid #444; }
 
-        /* تسجيل الدخول */
         #auth-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
-        .login-box { width: 85%; max-width: 360px; text-align: center; background: #111; padding: 40px 25px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; text-align: center; font-family: 'Cairo'; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--main); }
-        .login-btn { width: 100%; padding: 14px; background: var(--main); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; font-size: 1.1rem; }
+        .login-box { width: 85%; max-width: 360px; text-align: center; background: #111; padding: 40px 25px; border-radius: 20px; border: 1px solid #333; }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #1a1a1a; color: white; text-align: center; font-family: 'Cairo'; outline: none; }
+        .login-btn { width: 100%; padding: 14px; background: var(--main); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; }
 
-        /* السلايدرز والأقسام */
         .row { margin-bottom: 25px; padding-right: 5%; }
         .row-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--main); border-right: 4px solid var(--main); padding-right: 12px; }
         .row-container { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; scrollbar-width: none; }
         .row-container::-webkit-scrollbar { display: none; }
 
-        /* كارت الفيلم */
         .card { flex: 0 0 var(--card-w); border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #222; position: relative; background: #111; }
-        .card:hover { transform: scale(1.03); border-color: var(--main); }
         .card img { width: 100%; height: 215px; object-fit: cover; pointer-events: none; }
         .card-title { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, black); padding: 20px 8px 8px; font-size: 0.8rem; text-align: center; font-weight: 600; }
 
-        /* المشغل الاحترافي */
         #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
         .p-header { padding: 15px 5%; display: flex; align-items: center; background: #111; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 2; }
-        .back-btn { background: var(--main); color: #000; border: none; padding: 7px 18px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem; }
+        .back-btn { background: var(--main); color: #000; border: none; padding: 7px 18px; border-radius: 6px; font-weight: 900; cursor: pointer; }
         video { width: 100%; max-height: 65vh; background: #000; }
         
-        /* شريط التفاعل (الاعجابات الوهمية) */
         .p-actions { display: flex; justify-content: center; gap: 30px; padding: 20px; border-bottom: 1px solid #222; background: #0a0a0a; }
         .act-item { cursor: pointer; text-align: center; color: #888; transition: 0.3s; min-width: 60px; }
         .act-item i { font-style: normal; font-size: 1.4rem; display: block; margin-bottom: 4px; }
@@ -56,11 +48,11 @@
 
 <div id="auth-screen">
     <div class="login-box">
-        <h1 style="color:var(--main); margin:0; font-size: 3.5rem;">▸ ROD</h1>
-        <p style="color:#888; margin-bottom:30px;">متعة المشاهدة تبدأ من هنا</p>
+        <h1 style="color:var(--main); margin:0; font-size: 3rem;">▸ ROD</h1>
+        <p style="color:#888; margin-bottom:30px;">سجل دخولك للمشاهدة</p>
         <input type="text" id="user" placeholder="اسم المستخدم" spellcheck="false">
         <input type="password" id="pass" placeholder="كلمة المرور">
-        <button class="login-btn" onclick="handleLogin()">دخول المنصة</button>
+        <button class="login-btn" onclick="handleLogin()">دخول</button>
     </div>
 </div>
 
@@ -68,7 +60,7 @@
     <header>
         <div class="nav-tools">
             <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:4px 10px; border-radius:5px; cursor:pointer;">خروج</button>
-            <a href="#" class="home-btn" onclick="location.reload()">الرئيسية</a>
+            <a href="#" class="home-btn" onclick="closePlayer()">الرئيسية</a>
         </div>
         <div class="logo">ROD ▸</div>
     </header>
@@ -80,19 +72,16 @@
         <button class="back-btn" onclick="closePlayer()">رجوع</button>
         <div id="video-title" style="margin-right:15px; font-weight:bold; font-size:0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
     </div>
-    
     <video id="main-vid" controls playsinline controlsList="nodownload"></video>
     
     <div class="p-actions">
         <div class="act-item" onclick="react(this)"><i>👍</i><b id="l-count">0</b><span>أعجبني</span></div>
         <div class="act-item" onclick="react(this)"><i>👎</i><b id="d-count">0</b><span>لم يعجبني</span></div>
         <div class="act-item" onclick="react(this)"><i>❤️</i><b id="f-count">0</b><span>مفضلة</span></div>
-        <div class="act-item" onclick="alert('سيتم توفير التحميل قريباً للمشتركين')"><i>📥</i><b>+99</b><span>تحميل</span></div>
     </div>
 
     <div class="similar-head">مقترحات مشابهة</div>
     <div id="similar-list" class="row-container" style="padding: 0 5% 40px;"></div>
-    
     <div id="giscus-container" style="padding: 20px 5%;"></div>
 </div>
 
@@ -100,10 +89,12 @@
     const REPO = "ha8680878-lab/cinema-local";
     let moviesData = [];
 
-    window.onload = () => {
+    window.onload = async () => {
         if(localStorage.getItem('ROD_AUTH_KEY') === 'active') {
             document.getElementById('main-content').style.display = 'block';
-            loadApp();
+            await loadApp();
+            // فحص إذا كان الرابط يحتوي على معلومات فيلم محفوظ عند التحديث
+            checkUrlState();
         } else {
             document.getElementById('auth-screen').style.display = 'flex';
         }
@@ -113,16 +104,16 @@
         const u = document.getElementById('user').value;
         const p = document.getElementById('pass').value;
         try {
-            const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?nocache=${Date.now()}`);
+            const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?v=${Date.now()}`);
             const keys = await res.json();
             if(keys.find(k => k.user === u && k.pass === p)) {
                 localStorage.setItem('ROD_AUTH_KEY', 'active');
                 location.reload();
-            } else { alert("بيانات دخول خاطئة!"); }
+            } else { alert("بيانات خاطئة!"); }
         } catch(e) { alert("فشل الاتصال"); }
     }
 
-    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.reload(); }
+    function handleLogout() { localStorage.removeItem('ROD_AUTH_KEY'); location.href = "index.html"; }
 
     async function loadApp() {
         const res = await fetch(`movies.json?v=${Date.now()}`);
@@ -145,28 +136,50 @@
         `).join('');
     }
 
-    function openPlayer(url, title, cat) {
+    function openPlayer(url, title, cat, skipHistory = false) {
         document.getElementById('video-title').innerText = title;
         const v = document.getElementById('main-vid');
         v.src = url;
         document.getElementById('player').style.display = 'flex';
         v.play();
         
-        // توليد أرقام وهمية عند كل فتح للفيلم
+        // حفظ حالة الفيلم في الرابط (Hash)
+        if(!skipHistory) {
+            const state = { url, title, cat };
+            window.location.hash = "view=" + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+        }
+
         document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 100;
         document.getElementById('d-count').innerText = Math.floor(Math.random() * 10) + 1;
         document.getElementById('f-count').innerText = Math.floor(Math.random() * 200) + 50;
 
-        // مقترحات مشابهة
         const similar = moviesData.filter(m => m.category === cat && m.title !== title);
         document.getElementById('similar-list').innerHTML = similar.map(m => `
             <div class="card" style="flex: 0 0 130px;" onclick="openPlayer('${m.url}', '${m.title}', '${m.category}')">
                 <img src="${m.poster}" style="height: 180px;">
                 <div class="card-title" style="font-size:0.7rem;">${m.title}</div>
             </div>
-        `).join('') || "<p style='color:#444; font-size:0.8rem;'>لا توجد اقتراحات حالياً</p>";
+        `).join('') || "<p style='color:#444;'>لا توجد اقتراحات</p>";
         
         loadGiscus();
+    }
+
+    function checkUrlState() {
+        const hash = window.location.hash;
+        if(hash.startsWith("#view=")) {
+            try {
+                const base64 = hash.split("view=")[1];
+                const state = JSON.parse(decodeURIComponent(escape(atob(base64))));
+                openPlayer(state.url, state.title, state.cat, true);
+            } catch(e) { console.error("Hash error"); }
+        }
+    }
+
+    function closePlayer() {
+        document.getElementById('player').style.display = 'none';
+        document.getElementById('main-vid').pause();
+        document.getElementById('main-vid').src = "";
+        window.location.hash = ""; // مسح الرابط للعودة للرئيسية
     }
 
     function react(el) {
@@ -178,12 +191,6 @@
             count.innerText = parseInt(count.innerText) - 1;
             el.classList.remove('active');
         }
-    }
-
-    function closePlayer() {
-        document.getElementById('player').style.display = 'none';
-        document.getElementById('main-vid').pause();
-        document.getElementById('main-vid').src = "";
     }
 
     function loadGiscus() {
