@@ -3,108 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROD | عالم الترفيه</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>عالم الترفيه</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --main-color: #ff9800; --bg-color: #0b0b0b; }
-        body { background: var(--bg-color); color: white; font-family: 'Cairo', sans-serif; margin: 0; min-height: 100vh; }
+        :root { --main-color: #ff9800; --bg-gradient: linear-gradient(180deg, #141414 0%, #000000 100%); --card-bg: #1f1f1f; }
+        body { background: #000; background-image: var(--bg-gradient); color: white; font-family: 'Cairo', sans-serif; margin: 0; min-height: 100vh; overflow-x: hidden; }
         
         /* شاشة تسجيل الدخول */
-        #auth-screen { text-align: center; width: 100%; padding: 20px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none; }
-        .login-box { background: #1a1a1a; padding: 40px 30px; border-radius: 20px; border: 1px solid #333; max-width: 400px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #444; background: #222; color: white; text-align: center; font-size: 1.1rem; box-sizing: border-box; }
-        .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
-        
-        /* المحتوى الرئيسي */
-        #main-content { display: none; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 2px solid var(--main-color); background: #000; position: sticky; top: 0; z-index: 100; }
-        .logout-btn { background: #333; color: white; border: 1px solid #444; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+        #auth-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
+        .login-box { background: #141414; padding: 50px 40px; border-radius: 15px; border-top: 4px solid var(--main-color); width: 100%; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center; }
+        .login-box h2 { font-size: 2.2rem; color: var(--main-color); margin-bottom: 30px; font-weight: 700; }
+        input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #333; background: #2b2b2b; color: white; font-family: 'Cairo'; font-size: 1rem; box-sizing: border-box; transition: 0.3s; }
+        input:focus { border-color: var(--main-color); outline: none; background: #333; }
+        .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .login-btn:hover { background: #e68a00; transform: scale(1.02); }
 
-        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; padding: 20px; }
-        .card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; cursor: pointer; transition: 0.3s; position: relative; }
-        .card:hover { transform: translateY(-5px); border-color: var(--main-color); }
-        .card img { width: 100%; height: 240px; object-fit: cover; }
-        .card-title { padding: 10px; text-align: center; font-size: 0.9rem; }
-        
-        /* مشغل الفيديو والتعليقات */
-        #player { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; overflow-y: auto; }
-        .close-btn { position: sticky; top: 15px; right: 15px; background: var(--main-color); color: black; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; z-index: 10002; width: fit-content; margin: 15px; }
-        video { width: 100%; max-width: 900px; margin: 20px auto; border: 1px solid #333; border-radius: 10px; display: block; }
-        .comments-section { width: 95%; max-width: 900px; margin: 20px auto 50px auto; background: #111; padding: 15px; border-radius: 10px; }
+        /* الهيدر */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--main-color); text-decoration: none; }
+        .logout-btn { background: transparent; color: #aaa; border: 1px solid #444; padding: 6px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .logout-btn:hover { color: white; border-color: var(--main-color); }
+
+        /* شبكة الأفلام */
+        .container { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 25px; }
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; position: relative; border: 1px solid #222; }
+        .card:hover { transform: scale(1.08); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.7); border-color: var(--main-color); }
+        .card img { width: 100%; height: 270px; object-fit: cover; }
+        .card-info { padding: 12px; }
+        .card-info h3 { font-size: 0.9rem; margin: 0; color: #fff; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rating { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.85); color: var(--main-color); padding: 3px 8px; border-radius: 5px; font-size: 0.75rem; font-weight: 700; }
+
+        /* المشغل */
+        #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
+        .player-nav { padding: 15px 5%; display: flex; align-items: center; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
+        .close-btn { background: var(--main-color); color: black; padding: 8px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-left: 20px; }
+        video { width: 100%; max-width: 1000px; margin: 20px auto; border-radius: 10px; background: #000; }
+        .comments-area { width: 90%; max-width: 1000px; margin: 30px auto; padding-bottom: 50px; }
+
+        @media (max-width: 600px) { .container { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
-    <h1 style="color:var(--main-color); font-size: 3rem; margin-bottom: 20px;">ROD</h1>
     <div class="login-box">
+        <h2>عالم الترفيه</h2>
         <input type="text" id="username" placeholder="اسم المستخدم" autocomplete="off">
         <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password">
-        <button class="login-btn" onclick="login()">دخول المنصة</button>
-        <p id="error-msg" style="color:red; display:none; margin-top:15px;">بيانات الدخول غير صحيحة!</p>
+        <button class="login-btn" onclick="login()">دخول</button>
+        <p id="error-msg" style="color:#ff4444; display:none; margin-top:15px;">بيانات الدخول غير صحيحة</p>
     </div>
 </div>
 
-<div id="main-content">
+<div id="main-content" style="display:none;">
     <header>
-        <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
-        <h1 style="color:var(--main-color); margin:0;">ROD</h1>
+        <button class="logout-btn" onclick="logout()">خروج</button>
+        <div class="logo">عالم الترفيه</div>
     </header>
     <div class="container" id="movie-list"></div>
 </div>
 
 <div id="player">
-    <div class="close-btn" onclick="closePlayer()">إغلاق ✕</div>
-    <video id="main-video" controls playsinline src=""></video>
-    <div class="comments-section" id="giscus-container">
-        <p style="text-align:center; color:#777;">جاري تحميل التعليقات...</p>
+    <div class="player-nav">
+        <div class="close-btn" onclick="closePlayer()">رجوع</div>
+        <span id="p-title" style="font-size: 1.1rem; font-weight: bold; color: var(--main-color);"></span>
     </div>
+    <video id="main-video" controls playsinline></video>
+    <div class="comments-area" id="giscus-container"></div>
 </div>
 
 <script>
-    const GITHUB_USER = "ha8680878-lab";
-    const REPO = "cinema-local";
+    const REPO = "ha8680878-lab/cinema-local";
 
-    // فحص حالة الدخول فور تحميل الصفحة
-    window.onload = function() {
-        const session = localStorage.getItem('ROD_LOGIN_STATUS');
-        if (session === 'true') {
-            document.getElementById('main-content').style.display = 'block';
-            loadMovies();
-        } else {
-            document.getElementById('auth-screen').style.display = 'block';
-        }
+    window.onload = () => {
+        if(localStorage.getItem('ROD_SESSION') === 'active') { showContent(); } 
+        else { document.getElementById('auth-screen').style.display = 'flex'; }
     };
 
     async function login() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
-
         try {
-            // جلب اليوزرات مع منع التخزين المؤقت (Cache) لضمان التحديث اللحظي
-            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${REPO}/main/keys.json?t=${new Date().getTime()}`);
+            const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?nocache=${Date.now()}`);
             const users = await res.json();
-            const found = users.find(user => user.user === u && user.pass === p);
-
-            if (found) {
-                localStorage.setItem('ROD_LOGIN_STATUS', 'true');
-                location.reload(); 
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-            }
-        } catch (e) {
-            alert("خطأ في الاتصال بالخادم!");
-        }
+            if(users.find(x => x.user === u && x.pass === p)) {
+                localStorage.setItem('ROD_SESSION', 'active');
+                location.reload();
+            } else { document.getElementById('error-msg').style.display = 'block'; }
+        } catch(e) { alert("خطأ في الاتصال!"); }
     }
 
-    function logout() {
-        localStorage.removeItem('ROD_LOGIN_STATUS');
-        location.reload();
+    function logout() { localStorage.removeItem('ROD_SESSION'); location.reload(); }
+
+    function showContent() {
+        document.getElementById('main-content').style.display = 'block';
+        loadMovies();
     }
 
     async function loadMovies() {
-        const res = await fetch(`movies.json?v=${new Date().getTime()}`);
+        const res = await fetch(`movies.json?v=${Date.now()}`);
         const data = await res.json();
         const list = document.getElementById('movie-list');
-        list.innerHTML = "";
-        data
+        list.innerHTML = data.map(m => `
+            <div class="card" onclick="openPlayer('${m.url}', '${m.title}')">
+                <div class="rating">⭐ ${m.rating || '8.8'}</div>
+                <img src="${m.poster}">
+                <div class="card-info"><h3>${m.title}</h3></div>
+            </div>
+        `).join('');
+    }
+
+    function openPlayer(url, title) {
+        document.getElementById('p-title').innerText = title;
+        document.getElementById('main-video').src = url;
+        document.getElementById('player').style.display = 'flex';
+        document.getElementById('main-video').play();
+        loadGiscus();
+    }
+
+    function closePlayer() {
+        document.getElementById('player').style.display = 'none';
+        const v = document.getElementById('main-video');
+        v.pause(); v.src = "";
+    }
+
+    function loadGiscus() {
+        const container = document.getElementById('giscus-container');
+        container.innerHTML = "";
+        const s = document.createElement('script');
+        s.src = "https://giscus.app/client.js";
+        s.setAttribute("data-repo", REPO);
+        s.setAttribute("data-repo-id", "R_kgDON7u00A");
+        s.setAttribute("data-category", "Announcements");
+        s.setAttribute("data-category-id", "DIC_kwDON7u00M4CnH0Y");
+        s.setAttribute("data-mapping", "title");
+        s.setAttribute("data-theme", "dark");
+        s.setAttribute("data-lang", "ar");
+        s.crossOrigin = "anonymous"; s.async = true;
+        container.appendChild(s);
+    }
+</script>
+</body>
+</html>
