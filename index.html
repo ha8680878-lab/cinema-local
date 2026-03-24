@@ -6,7 +6,6 @@
     <title>ROD | منصة الترفيه</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* تعريف الألوان الأساسية للمنصة */
         :root { 
             --main: #ff9800; 
             --bg: #050505; 
@@ -23,10 +22,48 @@
             font-family: 'Cairo', sans-serif; 
             margin: 0; 
             overflow-x: hidden;
-            user-select: none; /* منع النسخ للحفاظ على شكل الموقع */
+            user-select: none;
         }
 
-        /* رأس الصفحة الاحترافي */
+        /* --- تأثيرات الشعار المتحرك (Animated Logo CSS) --- */
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: var(--main); 
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* الحروف البرتقالية مع تأثير توهج نبضي */
+        .logo-text {
+            position: relative;
+            animation: logoPulse 2s infinite ease-in-out;
+            text-shadow: 0 0 10px rgba(255,152,0,0.5);
+        }
+
+        /* تأثير علامة المشغل المتحركة ▸ */
+        .logo-icon {
+            font-family: Arial, sans-serif; /* لضمان شكل الرمز */
+            animation: iconSlide 1.5s infinite alternate ease-in-out;
+        }
+
+        /* تعريف حركة النبض والتوهج */
+        @keyframes logoPulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(255,152,0,0.5); transform: scale(1); }
+            50% { text-shadow: 0 0 25px rgba(255,152,0,0.8), 0 0 40px rgba(255,152,0,0.3); transform: scale(1.02); }
+        }
+
+        /* تعريف حركة انزلاق الرمز */
+        @keyframes iconSlide {
+            0% { transform: translateX(0px) scale(1); opacity: 0.8; }
+            100% { transform: translateX(5px) scale(1.1); opacity: 1; text-shadow: 0 0 15px rgba(255,152,0,0.8); }
+        }
+        /* --- نهاية تأثيرات الشعار --- */
+
         header { 
             display: flex; 
             justify-content: space-between; 
@@ -40,8 +77,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 4px 30px rgba(0,0,0,0.5);
         }
-
-        .logo { font-size: 1.8rem; font-weight: 900; color: var(--main); text-shadow: 0 0 15px rgba(255,152,0,0.3); }
         
         .home-btn { 
             background: linear-gradient(45deg, var(--main), #ffb74d); 
@@ -54,7 +89,6 @@
             transition: var(--smooth);
         }
 
-        /* واجهة تسجيل الدخول */
         #auth-screen { 
             position: fixed; inset: 0; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
             display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; 
@@ -75,7 +109,6 @@
             font-weight: 900; cursor: pointer; color: #000; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255,152,0,0.2);
         }
 
-        /* صفوف الأفلام */
         .row { margin-bottom: 35px; padding-right: 5%; animation: fadeIn 1s ease; }
         .row-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .row-title::before { content: ''; width: 4px; height: 20px; background: var(--main); border-radius: 10px; }
@@ -86,7 +119,6 @@
         }
         .row-container::-webkit-scrollbar { display: none; }
 
-        /* كارت الفيلم بتأثيرات الحركة */
         .card { 
             flex: 0 0 var(--card-w); border-radius: 14px; overflow: hidden; position: relative;
             background: #111; border: 1px solid rgba(255,255,255,0.05); transition: var(--smooth); cursor: pointer;
@@ -105,7 +137,6 @@
             padding: 25px 10px 10px; font-size: 0.85rem; text-align: center; font-weight: 600;
         }
 
-        /* المشغل (Player) */
         #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
         .p-header { padding: 15px 5%; display: flex; align-items: center; background: var(--glass); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 5; }
         
@@ -122,7 +153,6 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* للهواتف الصغيرة */
         @media (max-width: 600px) {
             :root { --card-w: 140px; }
             .row-title { font-size: 1.1rem; }
@@ -134,7 +164,9 @@
 
 <div id="auth-screen">
     <div class="login-box">
-        <h1 style="color:var(--main); margin:0; font-size: 3.5rem; letter-spacing: -2px;">ROD</h1>
+        <div class="logo" style="justify-content:center; font-size: 4rem; margin-bottom: 15px;">
+            <span class="logo-text">ROD</span><span class="logo-icon">▸</span>
+        </div>
         <p style="color:#666; font-size:0.9rem; margin-bottom:30px;">بوابتك لعالم السينما الحصري</p>
         <input type="text" id="user" placeholder="اسم المستخدم">
         <input type="password" id="pass" placeholder="كلمة المرور">
@@ -148,7 +180,9 @@
             <button onclick="handleLogout()" style="background:none; border:1px solid #333; color:#666; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:0.75rem;">خروج</button>
             <a href="#" class="home-btn" onclick="closePlayer()">الرئيسية</a>
         </div>
-        <div class="logo">ROD</div>
+        <a href="#" class="logo" onclick="location.reload()">
+            <span class="logo-text">ROD</span><span class="logo-icon">▸</span>
+        </div>
     </header>
     <div id="app-body" style="padding-top: 20px;"></div>
 </div>
@@ -237,7 +271,6 @@
             window.location.hash = "view=" + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
         }
 
-        // أرقام وهمية لزيادة الموثوقية
         document.getElementById('l-count').innerText = Math.floor(Math.random() * 500) + 200;
         document.getElementById('d-count').innerText = Math.floor(Math.random() * 12);
         document.getElementById('f-count').innerText = Math.floor(Math.random() * 300) + 100;
