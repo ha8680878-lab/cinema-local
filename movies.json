@@ -1,10 +1,8 @@
 [
     {
-        "title": "The TANK",
-        "poster": "https://cinema.albox.co/storage/movies/the-tank-2024.jpg",
-        "year": "2026",
-        "rating": 6.9,
-        "overview": "يرسل طاقم دبابة تايغر ألمانية مكونة من خمسة أفراد في مهمة سرية بعيداً خلف الخط الأمامي الذي كان ينافس بشدة، مدفوعين بميثامفيتامين فيرماخت.",
-        "url": "https://cloud02.albox.co/episodes/e83effc2-3df5-481a-b7f4-540f3acfe475.mp4"
+        "title": "فيلم جديد",
+        "url": "https://cloud02.albox.co/episodes/e83effc2-3df5-481a-b7f4-540f3acfe475.mp4",
+        "poster": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRM60b1wZuJd0py5apX8QQ7D7to03BZn0wC84CZ59NWCwGJkRwr",
+        "category": "أفلام مختارة"
     }
 ]
