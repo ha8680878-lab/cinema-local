@@ -3,104 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROD | سينما العرب</title>
+    <title>ROD | منصة الترفيه</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --main-color: #ff9800; --bg-gradient: linear-gradient(180deg, #141414 0%, #000000 100%); --card-bg: #1f1f1f; }
         body { background: #000; background-image: var(--bg-gradient); color: white; font-family: 'Cairo', sans-serif; margin: 0; min-height: 100vh; overflow-x: hidden; }
         
-        /* تأثير الشعار الجديد المحسن */
-        .logo-text { font-family: 'Cairo', sans-serif; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 3px; display: flex; align-items: center; text-decoration: none; }
-        .logo-symbol { color: var(--main-color); font-size: 1.2em; margin-left: 10px; text-shadow: 0 0 15px var(--main-color); }
-        .logo-name { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        .logo-text { font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 3px; display: flex; align-items: center; text-decoration: none; font-size: 2rem; }
+        .logo-symbol { color: var(--main-color); margin-left: 10px; text-shadow: 0 0 15px var(--main-color); }
 
-        /* شاشة تسجيل الدخول */
+        /* شاشة الدخول */
         #auth-screen { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 10000; display: none; }
-        .login-box { background: #141414; padding: 50px 40px; border-radius: 15px; border-top: 4px solid var(--main-color); width: 100%; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center; }
-        .login-box h2 { font-size: 2.5rem; margin-bottom: 30px; justify-content: center; }
-        input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #333; background: #2b2b2b; color: white; font-family: 'Cairo'; font-size: 1rem; box-sizing: border-box; transition: 0.3s; }
-        input:focus { border-color: var(--main-color); outline: none; background: #333; }
-        .login-btn { width: 100%; padding: 15px; background: var(--main-color); color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
-        .login-btn:hover { background: #e68a00; transform: scale(1.02); }
+        .login-box { background: #141414; padding: 40px; border-radius: 15px; border-top: 4px solid var(--main-color); width: 90%; max-width: 380px; text-align: center; }
+        input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #333; background: #2b2b2b; color: white; box-sizing: border-box; }
+        .login-btn { width: 100%; padding: 15px; background: var(--main-color); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        /* الهيدر */
+        /* الهيدر والأقسام */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
-        header .logo-text { font-size: 2rem; }
-        .logout-btn { background: transparent; color: #aaa; border: 1px solid #444; padding: 6px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
-        .logout-btn:hover { color: white; border-color: var(--main-color); }
+        .section-title { padding: 20px 5% 0; font-size: 1.5rem; color: var(--main-color); font-weight: 700; border-right: 4px solid var(--main-color); margin-right: 5%; margin-top: 20px; }
 
         /* شبكة الأفلام */
-        .container { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 25px; }
-        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; position: relative; border: 1px solid #222; }
-        .card:hover { transform: scale(1.08); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.7); border-color: var(--main-color); }
-        .card img { width: 100%; height: 270px; object-fit: cover; }
-        .card-info { padding: 12px; }
-        .card-info h3 { font-size: 0.9rem; margin: 0; color: #fff; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 400; }
-        .rating { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.85); color: var(--main-color); padding: 3px 8px; border-radius: 5px; font-size: 0.75rem; font-weight: 700; }
+        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; position: relative; border: 1px solid #222; }
+        .card:hover { transform: scale(1.05); border-color: var(--main-color); }
+        .card img { width: 100%; height: 240px; object-fit: cover; }
+        .card-info { padding: 10px; text-align: center; font-size: 0.85rem; }
+        .badge { position: absolute; top: 10px; left: 10px; background: var(--main-color); color: black; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
 
-        /* المشغل */
+        /* المشغل وأزرار الإعجاب */
         #player { display: none; position: fixed; inset: 0; background: #000; z-index: 10001; flex-direction: column; overflow-y: auto; }
-        .player-nav { padding: 15px 5%; display: flex; align-items: center; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
-        .close-btn { background: var(--main-color); color: black; padding: 8px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-left: 20px; font-size: 0.9rem; }
-        video { width: 100%; max-width: 1000px; margin: 20px auto; border-radius: 10px; background: #000; box-shadow: 0 0 50px rgba(255,152,0,0.15); }
-        .comments-area { width: 90%; max-width: 1000px; margin: 30px auto; padding-bottom: 50px; }
-
-        @media (max-width: 600px) { .container { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        .player-nav { padding: 15px 5%; display: flex; align-items: center; background: rgba(0,0,0,0.9); }
+        .close-btn { background: var(--main-color); color: black; padding: 8px 20px; border-radius: 5px; cursor: pointer; margin-left: 20px; font-weight: bold; }
+        video { width: 100%; max-width: 900px; margin: 20px auto; display: block; }
+        
+        .interaction-bar { display: flex; justify-content: center; gap: 30px; padding: 15px; background: #111; width: fit-content; margin: 0 auto; border-radius: 30px; border: 1px solid #333; }
+        .btn-action { cursor: pointer; font-size: 1.5rem; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-action:hover { color: var(--main-color); transform: scale(1.2); }
+        .comments-area { width: 90%; max-width: 900px; margin: 30px auto; }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
     <div class="login-box">
-        <h2 class="logo-text"><span class="logo-symbol">▸</span><span class="logo-name">ROD</span></h2>
-        <input type="text" id="username" placeholder="اسم المستخدم" autocomplete="off">
-        <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password">
-        <button class="login-btn" onclick="login()">دخول</button>
-        <p id="error-msg" style="color:#ff4444; display:none; margin-top:15px; font-size:0.9rem;">بيانات الدخول غير صحيحة</p>
+        <div class="logo-text" style="justify-content:center; margin-bottom:20px;"><span class="logo-symbol">▸</span>ROD</div>
+        <input type="text" id="username" placeholder="اسم المستخدم">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button class="login-btn" onclick="login()">دخول المنصة</button>
     </div>
 </div>
 
 <div id="main-content" style="display:none;">
     <header>
-        <button class="logout-btn" onclick="logout()">خروج</button>
-        <a href="#" class="logo-text"><span class="logo-symbol">▸</span><span class="logo-name">ROD</span></a>
+        <button onclick="logout()" style="background:none; color:#777; border:1px solid #333; padding:5px 10px; border-radius:5px; cursor:pointer;">خروج</button>
+        <div class="logo-text"><span class="logo-symbol">▸</span>ROD</div>
     </header>
-    <div class="container" id="movie-list"></div>
+    
+    <div id="sections-wrapper">
+        </div>
 </div>
 
 <div id="player">
     <div class="player-nav">
         <div class="close-btn" onclick="closePlayer()">رجوع</div>
-        <span id="p-title" style="font-size: 1.1rem; font-weight: bold; color: var(--main-color); margin-right: auto; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+        <span id="p-title" style="font-weight:bold;"></span>
     </div>
     <video id="main-video" controls playsinline></video>
+    
+    <div class="interaction-bar">
+        <div class="btn-action" onclick="alert('شكراً لإعجابك!')">👍 <span style="font-size: 0.9rem;">أعجبني</span></div>
+        <div class="btn-action" onclick="alert('سنحاول تحسين المحتوى')">👎 <span style="font-size: 0.9rem;">لم يعجبني</span></div>
+    </div>
+
     <div class="comments-area" id="giscus-container"></div>
 </div>
 
 <script>
-    const GITHUB_REPO = "ha8680878-lab/cinema-local";
+    const REPO = "ha8680878-lab/cinema-local";
 
     window.onload = () => {
-        // ميزة تسجيل الدخول الثابتة والمحفوظة
-        if(localStorage.getItem('ROD_SESSION_ACTIVE') === 'true') { showContent(); } 
+        if(localStorage.getItem('ROD_ACTIVE') === 'true') { showContent(); } 
         else { document.getElementById('auth-screen').style.display = 'flex'; }
     };
 
     async function login() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
-        try {
-            // جلب اليوزرات مع منع التخزين المؤقت لضمان التحديث
-            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/keys.json?nocache=${Date.now()}`);
-            const users = await res.json();
-            if(users.find(x => x.user === u && x.pass === p)) {
-                localStorage.setItem('ROD_SESSION_ACTIVE', 'true'); // تفعيل الجلسة الثابتة
-                location.reload(); // إعادة التحميل لتفعيل الحالة
-            } else { document.getElementById('error-msg').style.display = 'block'; }
-        } catch(e) { alert("خطأ في الاتصال بالخادم!"); }
+        const res = await fetch(`https://raw.githubusercontent.com/${REPO}/main/keys.json?n=${Date.now()}`);
+        const users = await res.json();
+        if(users.find(x => x.user === u && x.pass === p)) {
+            localStorage.setItem('ROD_ACTIVE', 'true');
+            location.reload();
+        } else { alert("بيانات خاطئة!"); }
     }
 
-    function logout() { localStorage.removeItem('ROD_SESSION_ACTIVE'); location.reload(); }
+    function logout() { localStorage.removeItem('ROD_ACTIVE'); location.reload(); }
 
     function showContent() {
         document.getElementById('main-content').style.display = 'block';
@@ -110,12 +107,21 @@
     async function loadMovies() {
         const res = await fetch(`movies.json?v=${Date.now()}`);
         const data = await res.json();
-        const list = document.getElementById('movie-list');
-        list.innerHTML = data.map(m => `
-            <div class="card" onclick="openPlayer('${m.url}', '${m.title}')">
-                <div class="rating">⭐ ${m.rating || '8.8'}</div>
-                <img src="${m.poster}">
-                <div class="card-info"><h3>${m.title}</h3></div>
+        const wrapper = document.getElementById('sections-wrapper');
+        
+        // استخراج الأقسام الفريدة (مثل أكشن، دراما)
+        const categories = [...new Set(data.map(m => m.category || "أفلام مختارة"))];
+        
+        wrapper.innerHTML = categories.map(cat => `
+            <div class="section-title">${cat}</div>
+            <div class="container">
+                ${data.filter(m => (m.category || "أفلام مختارة") === cat).map(m => `
+                    <div class="card" onclick="openPlayer('${m.url}', '${m.title}')">
+                        <div class="badge">${m.quality || 'HD'}</div>
+                        <img src="${m.poster}">
+                        <div class="card-info"><h3>${m.title}</h3></div>
+                    </div>
+                `).join('')}
             </div>
         `).join('');
     }
@@ -125,34 +131,23 @@
         document.getElementById('main-video').src = url;
         document.getElementById('player').style.display = 'flex';
         document.getElementById('main-video').play();
-        loadGiscus(); // تحميل نظام التعليقات
+        loadGiscus();
     }
 
     function closePlayer() {
         document.getElementById('player').style.display = 'none';
-        const v = document.getElementById('main-video');
-        v.pause(); v.src = ""; // إيقاف الفيديو وتنظيف الرابط
+        document.getElementById('main-video').pause();
     }
 
     function loadGiscus() {
         const container = document.getElementById('giscus-container');
-        container.innerHTML = ""; // تنظيف الصندوق قبل التحميل
+        container.innerHTML = "";
         const s = document.createElement('script');
         s.src = "https://giscus.app/client.js";
-        s.setAttribute("data-repo", GITHUB_REPO);
+        s.setAttribute("data-repo", REPO);
         s.setAttribute("data-repo-id", "R_kgDON7u00A");
         s.setAttribute("data-category", "Announcements");
         s.setAttribute("data-category-id", "DIC_kwDON7u00M4CnH0Y");
-        s.setAttribute("data-mapping", "title"); // يربط التعليقات باسم الفيلم
-        s.setAttribute("data-strict", "0");
-        s.setAttribute("data-reactions-enabled", "1");
-        s.setAttribute("data-emit-metadata", "0");
-        s.setAttribute("data-input-position", "top");
+        s.setAttribute("data-mapping", "title");
         s.setAttribute("data-theme", "dark");
         s.setAttribute("data-lang", "ar");
-        s.crossOrigin = "anonymous"; s.async = true;
-        container.appendChild(s);
-    }
-</script>
-</body>
-</html>
